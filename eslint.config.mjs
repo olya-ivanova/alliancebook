@@ -14,7 +14,7 @@ const eslintConfig = [
   {
     rules: {
       'prettier/prettier': 'error',
-      'react/react-in-jsx-scope': 'off'
+      'react/react-in-jsx-scope': 'off',
     },
   },
   {

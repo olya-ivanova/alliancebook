@@ -13,6 +13,7 @@ gallery/static/assets/img/people/${characterId}.jpg). The app is fully keyboard-
 - Keyboard-accessible UI (a11y)
 - Animated hover effects for character cards
 - Avatar images for each character
+- Loader shown before characters are loaded
 
 ## Stack
 
@@ -67,4 +68,5 @@ Notes
 The app fetches all characters once and applies client-side filtering and search for smoother UX.
 Pagination is purely visual and slices the filtered list.
 Some characters may not have images; a placeholder is shown in such cases.
+Pages Router is used because the application has many client-side hooks and a simple page structure, where the App Router with server components and nested layouts would be excessive.
 

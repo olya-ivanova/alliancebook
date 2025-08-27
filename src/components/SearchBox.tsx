@@ -5,11 +5,14 @@ interface SearchBoxProps {
 export const SearchBox = ({ onChangeHandler }: SearchBoxProps) => {
   return (
     <div role="search">
-      <label htmlFor="search" className="sr-only font-roboto">Search characters</label>
+      <label htmlFor="search" className="sr-only">
+        Search characters
+      </label>
       <input
         id="search"
         type="search"
-        className="font-roboto border border-gray-400 rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+        className="font-sans border border-gray-400 rounded p-2 w-full focus:outline-none focus:ring-2
+         focus:ring-orange-500 focus:ring-offset-2 text-[18px]"
         onChange={onChangeHandler}
         placeholder="Search..."
         aria-label="Search characters"

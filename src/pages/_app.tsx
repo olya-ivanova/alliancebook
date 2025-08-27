@@ -1,23 +1,19 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import { Orbitron, Roboto } from "next/font/google";
-
-const orbitron = Orbitron({
-  subsets: ["latin"],
-  weight: ["400", "700"],
-  variable: "--font-orbitron",
-});
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
-});
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { roboto, orbitron } from '@/fonts/fonts';
+import { cn } from '@/lib/utils';
+import '@/styles/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${orbitron.variable} ${roboto.variable}`}>
-      <Component {...pageProps} />
-    </main>
+    <>
+      <Head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+        <title>AllianceBook</title>
+      </Head>
+      <main className={cn(roboto.className, orbitron.className)}>
+        <Component {...pageProps} />
+      </main>
+    </>
   );
 }
