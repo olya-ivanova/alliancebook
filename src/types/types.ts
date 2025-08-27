@@ -6,3 +6,5 @@ export type Person = {
   height: string;
   mass: string;
 };
+
+export type Gender = 'all' | 'male' | 'female' | 'other';
