@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AllianceBook
 
-## Getting Started
+AllianceBook is a Star Wars character explorer. It allows you to browse all characters from the Star Wars universe, with search, filtering, and pagination. Avatars are loaded from a dedicated image endpoint (https://vieraboschkova.github.io/swapi-
+gallery/static/assets/img/people/${characterId}.jpg). The app is fully keyboard-accessible and responsive.
 
-First, run the development server:
+## Features
+
+- Fetches all characters from [SWAPI](https://swapi.py4e.com/)
+- Search by character name
+- Filter by gender (male, female, other)
+- Pagination with smooth scrolling
+- Responsive grid layout
+- Keyboard-accessible UI (a11y)
+- Animated hover effects for character cards
+- Avatar images for each character
+
+## Stack
+
+- Next.js (React framework)
+- Tailwind CSS for styling
+- TypeScript for type safety
+
+## Folder structure
+
+- pages/ – Next.js pages
+- components/ – Reusable UI components (CharacterCard, Pagination, Filter, SearchBox)
+- types/ – TypeScript types
+- utils/ – Utility functions (e.g., API fetch, birth year formatting)
+
+## Accessibility
+
+- All interactive elements are keyboard-focusable
+- aria-label and aria-live are used where appropriate
+- Focus outlines and hover states are clearly visible
+
+## Scripts
+
+- dev – Run development server
+- build – Build production bundle
+- start – Start production server
+
+## Installation
+
+1. Clone the repository:
 
 ```bash
+git clone https://github.com/your-username/alliancebook.git
+cd alliancebook
+
+2. Install dependencies:
+
+npm install
+# or
+yarn install
+
+3. Run the development server:
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Open http://localhost:3000 in your browser.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Notes
 
-## Learn More
+The app fetches all characters once and applies client-side filtering and search for smoother UX.
+Pagination is purely visual and slices the filtered list.
+Some characters may not have images; a placeholder is shown in such cases.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

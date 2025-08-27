@@ -1,9 +1,13 @@
 import { useEffect, useState, useMemo } from 'react';
-import { Person, Gender } from '@/types/types';
+
 import CharacterCard from '@/components/CharacterCard';
 import { SearchBox } from '@/components/SearchBox';
 import { Pagination } from '@/components/Pagination';
 import { Filter } from '@/components/Filter';
+import { Loading } from '@/components/Loading';
+
+import { Person, Gender } from '@/types/types';
+
 import { fetchAllPeople } from '@/utils/api';
 
 export default function Home() {
@@ -16,34 +20,36 @@ export default function Home() {
   const itemsPerPage = 12;
 
   useEffect(() => {
-    const controller = new AbortController();
     setLoading(true);
 
-    fetchAllPeople(controller.signal).then((people) => {
-      setAllPeople(people);
-      setLoading(false);
-    });
+    const controller = new AbortController();
+
+    fetchAllPeople(controller.signal)
+      .then((people) => setAllPeople(people))
+      .catch((err) => {
+        if ((err as any).name !== 'AbortError') console.error(err);
+      })
+      .finally(() => setLoading(false));
 
     return () => controller.abort();
   }, []);
 
-const filteredPeople = useMemo(() => {
-  return allPeople.filter(person => {
-    const genderLower = person.gender.toLowerCase();
+  const filteredPeople = useMemo(() => {
+    return allPeople.filter((person) => {
+      const genderLower = person.gender.toLowerCase();
 
-    const matchesGender =
-      gender === Gender.All
-        ? true
-        : gender === Gender.Other
-        ? genderLower !== Gender.Male && genderLower !== Gender.Female
-        : genderLower === gender;
+      const matchesGender =
+        gender === Gender.All
+          ? true
+          : gender === Gender.Other
+          ? genderLower !== Gender.Male && genderLower !== Gender.Female
+          : genderLower === gender;
 
       const matchesSearch = person.name.toLowerCase().includes(search.toLowerCase());
 
       return matchesGender && matchesSearch;
     });
   }, [allPeople, search, gender]);
-
 
   const totalPages = Math.max(1, Math.ceil(filteredPeople.length / itemsPerPage));
 
@@ -55,16 +61,21 @@ const filteredPeople = useMemo(() => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPage(1);
     setSearch(e.target.value);
-  }
+  };
 
   const handleGenderChange = (newGender: Gender) => {
     setPage(1);
     setGender(newGender);
-  }
+  };
 
   const getIdFromUrl = (url: string) => {
     const match = url.match(/people\/(\d+)\//);
+
     return match ? match[1] : '';
+  };
+
+  if (loading || allPeople.length === 0) {
+    return <Loading />
   }
 
   return (
@@ -78,24 +89,19 @@ const filteredPeople = useMemo(() => {
           <Filter gender={gender} setGender={handleGenderChange} />
         </div>
 
-        {loading ? (
-          <div className="py-20 text-center">Loading…</div>
+        {currentPagePeople.length > 0 ? (
+          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-stretch">
+            {currentPagePeople.map((p) => (
+              <li key={p.url}>
+                <CharacterCard person={p} id={getIdFromUrl(p.url)} />
+              </li>
+            ))}
+          </ul>
         ) : (
-          <>
-            {currentPagePeople.length === 0 ? (
-              <div className="py-10 text-center text-slate-600">No characters found.</div>
-            ) : (
-              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                {currentPagePeople.map((p) => (
-                  <li key={p.url}>
-                    <CharacterCard person={p} id={getIdFromUrl(p.url)} />
-                  </li>
-                ))}
-              </ul>
-            )}
-          </>
+          <div className="font-roboto py-10 text-center text-slate-600">No characters found.</div>
         )}
       </main>
+
       <footer>
         <Pagination page={page} totalPages={totalPages} setPage={setPage} />
       </footer>
