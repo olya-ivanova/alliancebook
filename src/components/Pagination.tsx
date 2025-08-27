@@ -9,7 +9,7 @@ interface PaginationProps {
 
 export const Pagination = ({ page, totalPages, setPage }: PaginationProps) => {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [page]);
 
   const goToPage = (newPage: number) => {
