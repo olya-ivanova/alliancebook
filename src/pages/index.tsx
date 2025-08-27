@@ -66,9 +66,10 @@ export default function Home() {
   return (
     <>
       <main className="p-4 max-w-6xl mx-auto">
-        <h1 className="text-2xl font-bold">AllianceBook</h1>
+        <h1 className="font-orbitron text-2xl font-bold text-orange-500">AllianceBook</h1>
+        <p className="font-roboto">The intergalactic archive of characters.</p>
 
-        <div className="flex flex-col my-8 md:flex-row md:items-center justify-between">
+        <div className="flex flex-col my-8 md:flex-row md:items-center justify-between gap-8">
           <SearchBox onChangeHandler={handleSearchChange} />
           <Filter gender={gender} setGender={handleGenderChange} />
         </div>
