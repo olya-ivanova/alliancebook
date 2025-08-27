@@ -9,11 +9,11 @@ import { fetchAllPeople } from '@/utils/api';
 export default function Home() {
   const [allPeople, setAllPeople] = useState<Person[]>([]);
   const [search, setSearch] = useState('');
-  const [gender, setGender] = useState<Gender>('all');
+  const [gender, setGender] = useState<Gender>(Gender.All);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -27,19 +27,23 @@ export default function Home() {
     return () => controller.abort();
   }, []);
 
-  const filteredPeople = useMemo(() => {
-    return [...allPeople].filter(p => {
-      const matchesGender =
-        gender === 'all'
-          ? true
-          : gender === 'other'
-          ? !['male', 'female'].includes(p.gender.toLowerCase())
-          : p.gender.toLowerCase() === gender;
+const filteredPeople = useMemo(() => {
+  return allPeople.filter(person => {
+    const genderLower = person.gender.toLowerCase();
 
-      const matchesSearch = p.name.toLowerCase().includes(search.toLowerCase());
+    const matchesGender =
+      gender === Gender.All
+        ? true
+        : gender === Gender.Other
+        ? genderLower !== Gender.Male && genderLower !== Gender.Female
+        : genderLower === gender;
+
+      const matchesSearch = person.name.toLowerCase().includes(search.toLowerCase());
+
       return matchesGender && matchesSearch;
     });
   }, [allPeople, search, gender]);
+
 
   const totalPages = Math.max(1, Math.ceil(filteredPeople.length / itemsPerPage));
 
@@ -69,7 +73,7 @@ export default function Home() {
         <h1 className="font-orbitron text-2xl font-bold text-orange-500">AllianceBook</h1>
         <p className="font-roboto">The intergalactic archive of characters.</p>
 
-        <div className="flex flex-col my-8 md:flex-row md:items-center justify-between gap-8">
+        <div className="flex flex-col my-8 md:my-16 md:flex-row md:items-center justify-between gap-8">
           <SearchBox onChangeHandler={handleSearchChange} />
           <Filter gender={gender} setGender={handleGenderChange} />
         </div>

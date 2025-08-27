@@ -7,4 +7,9 @@ export type Person = {
   mass: string;
 };
 
-export type Gender = 'all' | 'male' | 'female' | 'other';
+export enum Gender {
+  All = 'all',
+  Male = 'male',
+  Female = 'female',
+  Other = 'other',
+}
