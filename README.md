@@ -13,6 +13,7 @@ gallery/static/assets/img/people/${characterId}.jpg). The app is fully keyboard-
 - Keyboard-accessible UI (a11y)
 - Animated hover effects for character cards
 - Avatar images for each character
+- Responsive grid layout, fully adaptive for mobile and tablet devices
 - Loader shown before characters are loaded
 
 ## Stack
@@ -63,7 +64,7 @@ yarn dev
 
 4. Open http://localhost:3000 in your browser.
 
-Notes
+## Notes
 
 The app fetches all characters once and applies client-side filtering and search for smoother UX.
 Pagination is purely visual and slices the filtered list.
